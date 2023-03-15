@@ -1,6 +1,6 @@
-const mongooge = require('mongoose')
+const mongoose = require('mongoose')
 
- const UserSchema = new mongooge.Schema({
+ const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please provide a name'],
@@ -24,4 +24,4 @@ const mongooge = require('mongoose')
     }
  })
 
- module.exports = mongoose.mode('User', UserSchema)
+ module.exports = mongoose.model('User', UserSchema)
