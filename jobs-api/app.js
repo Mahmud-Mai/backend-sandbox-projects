@@ -18,7 +18,8 @@ app.use(express.json());
 // extra packages
 
 // routes
-app.get('/', (req, res) => res.send('Jobs Api Main route'))
+app.use('/api/v1/auth', authRoute)
+app.use('/api/v1/jobs', jobsRoute)
 
 
 app.use(notFoundMiddleware);
@@ -30,7 +31,7 @@ const port = process.env.PORT || 3030;
 
 const start = async () => {
   try {
-    // await connectDB(process.env.MONGO_URI)
+    await connectDB(process.env.MONGO_URI)
     app.listen(port, console.log(`Server is listening on port ${port}...`)
     );
   } catch (error) {
