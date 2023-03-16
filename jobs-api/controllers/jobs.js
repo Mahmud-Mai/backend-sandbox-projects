@@ -37,7 +37,17 @@ const updateJob = async (req, res) => {
     res.status(StatusCodes.OK).json({ job })
 }
 const deleteJob = async (req, res) => {
-    res.send('delete job')
+    const {
+        body: {company, position},
+        user: { userId } ,
+        params: {id:jobId}
+    } = req
+
+    const job = await Job.findByIdAndRemove({ __id:jobId, createdBy:userId}, req.body, {new:true, runValidators:true})
+    if(!job){
+        throw new NotFoundError(`No job with id ${jobId} found`)
+    }
+    res.status(StatusCodes.OK).json({ job })
 }
 
 module.exports = {
