@@ -30,11 +30,16 @@ const jwt = require('jsonwebtoken')
     this.password = await bcrypt.hash(this.password, salt)
     next();
  })
-
+//method to create JWT tokem
  UserSchema.method.createJWT  = function(){
     return jwt.sign({UserId: this._id, name:this.name},process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_LIFETIME
     })
+ }
+// method to compare passwords
+ UserSchema.method.comparePass = async function(candidatePassword) {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password)
+    return isMatch
  }
 
  module.exports = mongoose.model('User', UserSchema)
